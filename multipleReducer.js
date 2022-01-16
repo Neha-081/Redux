@@ -1,7 +1,11 @@
 //store
 const redux=require('redux')
+const reduxLogger=require('redux-logger')
+
 const createStore=redux.createStore
 const combineReducers=redux.combineReducers
+const applyMiddleware=redux.applyMiddleware
+const logger=reduxLogger.createLogger()
 
 
 //creating action
@@ -78,13 +82,13 @@ const CakeReducer=(state=initialCake,action)=>{
    })
 
 //store holding application state
-const store=createStore(rootReducer)
+const store=createStore(rootReducer,applyMiddleware(logger))
 
 //allow access to state via getState()
 console.log('initialState',store.getState());
 
 //register listener via subscribe(listener)
-const unsubscribe=store.subscribe(()=>console.log('updated state',store.getState()))
+const unsubscribe=store.subscribe(()=>{})
 
 //allow state to be updated via dispatch(action)
 store.dispatch(buyCake())   //buyCake i.e-action
